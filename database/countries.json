@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "countries": [
+    {
+      "code": "MY",
+      "name_ms": "Malaysia",
+      "name_en": "Malaysia",
+      "order": 1,
+      "timezone": "Asia/Kuala_Lumpur",
+      "logo_folder": "logos/malaysia"
+    },
+    {
+      "code": "ID",
+      "name_ms": "Indonesia",
+      "name_en": "Indonesia",
+      "order": 2,
+      "timezone": "Asia/Jakarta",
+      "logo_folder": "logos/indonesia"
+    },
+    {
+      "code": "SG",
+      "name_ms": "Singapura",
+      "name_en": "Singapore",
+      "order": 3,
+      "timezone": "Asia/Singapore",
+      "logo_folder": "logos/singapore"
+    },
+    {
+      "code": "BN",
+      "name_ms": "Brunei",
+      "name_en": "Brunei",
+      "order": 4,
+      "timezone": "Asia/Brunei",
+      "logo_folder": "logos/brunei"
+    }
+  ]
+}

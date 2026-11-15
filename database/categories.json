@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "all",
+      "name_ms": "Semua",
+      "name_en": "All",
+      "order": 0
+    },
+    {
+      "id": "general",
+      "name_ms": "Umum",
+      "name_en": "General",
+      "order": 1
+    },
+    {
+      "id": "news",
+      "name_ms": "Berita",
+      "name_en": "News",
+      "order": 2
+    },
+    {
+      "id": "entertainment",
+      "name_ms": "Hiburan",
+      "name_en": "Entertainment",
+      "order": 3
+    },
+    {
+      "id": "sports",
+      "name_ms": "Sukan",
+      "name_en": "Sports",
+      "order": 4
+    },
+    {
+      "id": "education",
+      "name_ms": "Pendidikan",
+      "name_en": "Education",
+      "order": 5
+    },
+    {
+      "id": "kids",
+      "name_ms": "Kanak-kanak",
+      "name_en": "Kids",
+      "order": 6
+    },
+    {
+      "id": "islamic",
+      "name_ms": "Islamik",
+      "name_en": "Islamic",
+      "order": 7
+    },
+    {
+      "id": "documentary",
+      "name_ms": "Dokumentari",
+      "name_en": "Documentary",
+      "order": 8
+    }
+  ]
+}
