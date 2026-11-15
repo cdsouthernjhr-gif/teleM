@@ -1,0 +1,44 @@
+name: Database check
+
+# Validates the JSON database on every change and lets the maintainer run a
+# stream health report manually. NOTE: GitHub runners are outside Malaysia,
+# so GEO_RESTRICTED results here are expected for MY-only streams. The report
+# is uploaded as an artifact; it never edits the database automatically.
+
+on:
+  push:
+    paths: ["database/**"]
+  pull_request:
+    paths: ["database/**"]
+  workflow_dispatch:
+    inputs:
+      health_check:
+        description: "Also run the stream health check (from a non-Malaysian runner)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.8"
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Validate database JSON
+        run: dart run tool/validate_db.dart
+      - name: Stream health report
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.health_check }}
+        run: dart run tool/health_check.dart --json health_report.json
+      - uses: actions/upload-artifact@v4
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.health_check }}
+        with:
+          name: health-report
+          path: health_report.json

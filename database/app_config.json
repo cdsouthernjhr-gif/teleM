@@ -1,0 +1,57 @@
+{
+  "database_version": 1,
+  "min_app_build": 1,
+  "updated_at": "2026-11-15",
+  "allowed_stream_domains": [
+    "devstreaming-cdn.apple.com"
+  ],
+  "allowed_official_domains": [
+    "awesometv.my",
+    "channelnewsasia.com",
+    "kompas.tv",
+    "metrotvnews.com",
+    "mewatch.sg",
+    "rctiplus.com",
+    "rtb.gov.bn",
+    "rtbgo.bn",
+    "rtm.gov.my",
+    "tonton.com.my",
+    "trans7.co.id",
+    "transtv.co.id",
+    "tvonenews.com",
+    "tvri.go.id",
+    "vidio.com"
+  ],
+  "test_stream": {
+    "name": "Apple HLS test stream (bipbop)",
+    "url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
+    "type": "hls"
+  },
+  "geo": {
+    "enabled": true,
+    "endpoints": [
+      {
+        "url": "https://www.cloudflare.com/cdn-cgi/trace",
+        "format": "cloudflare_trace"
+      },
+      {
+        "url": "https://ipapi.co/json/",
+        "format": "json",
+        "field": "country_code"
+      }
+    ]
+  },
+  "health": {
+    "timeout_seconds": 10,
+    "max_concurrency": 2
+  },
+  "playback": {
+    "max_retries_per_source": 2,
+    "retry_base_seconds": 2,
+    "stall_timeout_seconds": 20
+  },
+  "announcement": {
+    "ms": "",
+    "en": ""
+  }
+}
