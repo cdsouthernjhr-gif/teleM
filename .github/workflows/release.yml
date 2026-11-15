@@ -1,9 +1,18 @@
 name: Release APK
 
-# Push a tag like v1.0.0 to build MY_ASEAN_TV.apk and publish it as a
-# GitHub Release asset (direct download link, no login needed for public repos).
+# Builds MY_ASEAN_TV.apk and publishes it as a GitHub Release asset
+# (direct download link; no login needed when the repository is public).
+#
+# Start it from Actions → "Release APK" → Run workflow (enter e.g. v1.0.0),
+# or push a tag like v1.0.0. The workflow creates the tag if it is missing.
 
 on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, e.g. v1.0.0"
+        required: true
+        default: "v1.0.0"
   push:
     tags: ["v*"]
 
@@ -73,7 +82,9 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: MY ASEAN TV ${{ github.ref_name }}
+          tag_name: ${{ inputs.tag || github.ref_name }}
+          target_commitish: ${{ github.sha }}
+          name: MY ASEAN TV ${{ inputs.tag || github.ref_name }}
           files: |
             dist/MY_ASEAN_TV.apk
             dist/MY_ASEAN_TV-armeabi-v7a.apk
