@@ -105,7 +105,7 @@ jobs:
 
             ## Status
 
-            - Senarai saluran: 36 saluran (MY, ID, SG, BN) dengan pautan **platform rasmi**.
-            - **Belum ada URL stream terus yang disahkan**. Saluran dibuka melalui platform rasmi penyiar. URL ditambah melalui `database/` di GitHub tanpa APK baharu.
-            - Uji pemain: Tetapan → **UJI PEMAIN HLS**.
-            - Belum diuji pada peranti Android 6.0 / TV Box 2 GB sebenar (lihat `documentation/TEST_REPORT.md`).
+            - Senarai saluran dimuat turun dari pangkalan data GitHub (`database/`). Tekan **KEMAS KINI** dalam aplikasi untuk senarai terkini, tanpa APK baharu.
+            - Saluran dengan stream terus yang diuji dipaparkan dahulu. Saluran lain membuka **platform rasmi** penyiar.
+            - Uji pemain: Tetapan → **UJI PEMAIN HLS**. Uji semua stream dari rangkaian anda: Tetapan → **UJI SEMUA STREAM**.
+            - Butiran sumber dan ujian: `documentation/SOURCES.md`, `documentation/TEST_REPORT.md`.
