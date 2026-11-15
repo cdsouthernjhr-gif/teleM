@@ -43,10 +43,20 @@ void main() {
     test('has the four countries with all target channels and unique ids', () {
       final b = DatabaseBundle.fromRaw(db);
       expect(b.countries.map((c) => c.code), ['MY', 'ID', 'SG', 'BN']);
-      expect(b.channelsFor('MY').length, 11);
-      expect(b.channelsFor('ID').length, 15);
-      expect(b.channelsFor('SG').length, 6);
-      expect(b.channelsFor('BN').length, 4);
+      // Every target channel from the specification is present.
+      const targets = {
+        'MY': ['my_tv1', 'my_tv2', 'my_tv_okey', 'my_tv6', 'my_berita_rtm', 'my_sukan_rtm', 'my_tv3', 'my_8tv',
+               'my_tv9', 'my_didiktv', 'my_awesome_tv'],
+        'ID': ['id_tvri_nasional', 'id_tvri_world', 'id_tvri_sport', 'id_tvri_daerah', 'id_rcti', 'id_mnctv', 'id_gtv',
+               'id_inews', 'id_sctv', 'id_indosiar', 'id_trans_tv', 'id_trans7', 'id_metro_tv', 'id_tvone',
+               'id_kompas_tv'],
+        'SG': ['sg_channel_5', 'sg_channel_8', 'sg_channel_u', 'sg_suria', 'sg_vasantham', 'sg_cna'],
+        'BN': ['bn_rtb_sukmaindera', 'bn_rtb_aneka', 'bn_rtb_perdana', 'bn_rtb_news'],
+      };
+      targets.forEach((country, ids) {
+        final have = b.channelsFor(country).map((c) => c.id).toSet();
+        expect(have.containsAll(ids), isTrue, reason: '$country missing ${ids.where((i) => !have.contains(i))}');
+      });
       final ids = b.channels.map((c) => c.id).toList();
       expect(ids.toSet().length, ids.length);
     });
@@ -61,11 +71,11 @@ void main() {
       }
     });
 
-    test('every channel has an official platform URL separate from stream URL', () {
+    test('every channel can be watched somehow; official and stream URLs are separate', () {
       final b = DatabaseBundle.fromRaw(db);
       for (final c in b.channels) {
-        expect(c.officialUrl, startsWith('https://'), reason: c.id);
-        expect(c.officialUrl == c.streamUrl, isFalse, reason: c.id);
+        expect(c.hasDirectStream || c.officialUrl.startsWith('https://'), isTrue, reason: c.id);
+        if (c.officialUrl.isNotEmpty) expect(c.officialUrl == c.streamUrl, isFalse, reason: c.id);
       }
     });
 

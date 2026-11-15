@@ -28,6 +28,13 @@ Future<bool> defaultConnectivityProbe() async {
   }
 }
 
+/// Channels with a direct stream first; database order is kept inside each
+/// group (stable sort).
+List<Channel> playableFirst(List<Channel> list) => [
+      ...list.where((c) => c.hasDirectStream),
+      ...list.where((c) => !c.hasDirectStream),
+    ];
+
 /// Pseudo "country" tab for favourites.
 const String kFavouritesTab = 'FAV';
 
@@ -203,7 +210,7 @@ class AppState extends ChangeNotifier {
       final fav = store.favourites;
       return fav.map(b.byId).whereType<Channel>().where((c) => c.enabled).toList();
     }
-    return b.channelsFor(selectedCountry, category: selectedCategory);
+    return playableFirst(b.channelsFor(selectedCountry, category: selectedCategory));
   }
 
   /// Channels used for channel up/down in the player.
@@ -211,7 +218,7 @@ class AppState extends ChangeNotifier {
     final b = bundle;
     if (b == null) return [current];
     if (selectedCountry == kFavouritesTab && store.isFavourite(current.id)) return visibleChannels;
-    return b.channelsFor(current.countryCode);
+    return playableFirst(b.channelsFor(current.countryCode));
   }
 
   /// Effective status: on-device test result if present, else database value.

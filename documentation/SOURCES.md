@@ -15,6 +15,30 @@ Calon URL diambil daripada indeks awam iptv-org. Hanya hos milik penyiar atau CD
 | RTB Sukmaindera | `d1211whpimeups.cloudfront.net` (CDN RTB Go) | HTTP 403 di luar Brunei; tidak disahkan |
 | Suria | `d11h6a6nhl9kj9.cloudfront.net` | Hos tiada lagi (DNS); tidak dimasukkan |
 
+### Ditambah dalam v3 (diuji 15 Nov 2026, kaedah yang sama)
+
+| Saluran | Hos (domain penyiar) | Keputusan |
+|---|---|---|
+| 29 stesen TVRI daerah (Aceh … Yogyakarta) | `ott-balancer.tvri.go.id` | ONLINE |
+| Magna Channel | `edge.medcom.id` | ONLINE (tidak 24 jam) |
+| Rodja TV | `rodjatv.com` | ONLINE |
+| DAAI TV | `pull.daaiplus.com` | ONLINE |
+| UGTV | `cdn.gunadarma.ac.id` | ONLINE |
+| Salira TV | `live.salira.tv` | ONLINE |
+| Lingkar TV | `lingkartv.my.id` | ONLINE |
+| Rinjani TV | `rinjanitv.cloud` | ONLINE |
+| Maah TV (MY) | `hls.maahtv.live` | ONLINE |
+| meWATCH LIVE 1 (SG) | `tglmp04.akamaized.net` (DASH, tanpa DRM) | ONLINE (saluran acara; mungkin papar slaid antara acara) |
+
+**Ditolak:**
+- TVR Parlemen dan TVKU: sambungan diputuskan.
+- Al-Iman TV: 404.
+- Jogja TV: sijil TLS tidak sah.
+- RRI Net: hos bernama `private-streaming`.
+- Stream pada vendor yang tidak dapat disahkan (`siar.us`, `streamlock.net`) dan semua restream pihak ketiga.
+
+Bagi saluran v3 selain TVRI dan meWATCH, laman rasmi belum dapat disahkan dari persekitaran pembinaan. Oleh itu `official_url` dibiarkan kosong (tidak diteka).
+
 Pemilikan hos CloudFront tidak dapat dibuktikan melalui nama domain. Ia dikenal pasti sebagai CDN pemain rasmi berdasarkan indeks awam. **Kebenaran penyiar untuk penggunaan dalam aplikasi pihak ketiga belum disahkan**, jadi semak terma penyiar sebelum edaran awam.
 
 

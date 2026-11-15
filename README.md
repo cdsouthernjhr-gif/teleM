@@ -7,9 +7,12 @@ Aplikasi TV percuma Flutter untuk **Android TV Box, telefon dan tablet Android**
 - Senarai saluran ialah **pangkalan data JSON di GitHub** (`database/`). Anda boleh mengemas kininya tanpa membina APK baharu.
 - Aplikasi tidak memintas DRM, tidak menggunakan akaun berbayar dan tidak mengaktifkan VPN sendiri. Ia juga tidak mereka URL stream palsu.
 
-> **Status stream (pangkalan data v2, 15 Nov 2026):** 9 saluran mempunyai stream terus yang telah diuji ONLINE: TV1, TV2, TV Okey, Berita RTM, TVRI Nasional, TVRI World, TVRI Daerah (Jakarta), Metro TV dan CNA.
-> RTB Sukmaindera mempunyai URL, tetapi ia membalas HTTP 403 di luar Brunei.
-> Saluran lain hanya mempunyai pautan **BUKA PLATFORM RASMI**.
+> **Status stream (pangkalan data v3, 15 Nov 2026):** 74 saluran, 47 daripadanya mempunyai stream terus yang diuji ONLINE.
+> - **Malaysia:** TV1, TV2, TV Okey, Berita RTM, Maah TV
+> - **Indonesia:** TVRI Nasional, TVRI World, 30 stesen TVRI daerah, Metro TV, Magna Channel, Rodja TV, DAAI TV, UGTV, Salira TV, Lingkar TV, Rinjani TV
+> - **Singapura:** CNA, meWATCH LIVE 1
+>
+> Saluran yang boleh dimainkan dipaparkan dahulu dalam grid. Saluran lain membuka **platform rasmi**.
 > Langkah menambah URL baharu ada dalam [documentation/STREAM_VERIFICATION.md](documentation/STREAM_VERIFICATION.md).
 
 ## Struktur repository

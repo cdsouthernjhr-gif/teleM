@@ -1,14 +1,22 @@
 {
-  "database_version": 2,
+  "database_version": 3,
   "min_app_build": 1,
   "updated_at": "2026-11-15",
   "allowed_stream_domains": [
-    "devstreaming-cdn.apple.com",
+    "cdn.gunadarma.ac.id",
+    "d1211whpimeups.cloudfront.net",
     "d25tgymtnqzu8s.cloudfront.net",
-    "ott-balancer.tvri.go.id",
-    "edge.medcom.id",
     "d2e1asnsl7br7b.cloudfront.net",
-    "d1211whpimeups.cloudfront.net"
+    "devstreaming-cdn.apple.com",
+    "edge.medcom.id",
+    "hls.maahtv.live",
+    "lingkartv.my.id",
+    "live.salira.tv",
+    "ott-balancer.tvri.go.id",
+    "pull.daaiplus.com",
+    "rinjanitv.cloud",
+    "rodjatv.com",
+    "tglmp04.akamaized.net"
   ],
   "allowed_official_domains": [
     "awesometv.my",
