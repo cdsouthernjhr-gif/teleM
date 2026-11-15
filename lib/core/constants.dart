@@ -9,5 +9,5 @@ const String kDatabaseBaseUrl = String.fromEnvironment(
 
 /// Must match the build number in pubspec.yaml (`version: x.y.z+BUILD`).
 /// The database can require a minimum build via `min_app_build`.
-const int kAppBuild = 1;
-const String kAppVersion = '1.0.0';
+const int kAppBuild = 2;
+const String kAppVersion = '1.1.0';

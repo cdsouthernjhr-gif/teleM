@@ -103,8 +103,11 @@ void main() {
         await t.tap(find.text(cat.nameMs));
         await t.pumpAndSettle();
         final expected = s.bundle!.channelsFor(country.code, category: cat.id);
-        for (final ch in expected) {
-          expect(find.byKey(ValueKey('card_${ch.id}')), findsOneWidget, reason: '${country.code}/${cat.id}/${ch.id}');
+        expect(s.visibleChannels.map((c) => c.id), playableFirst(expected).map((c) => c.id));
+        // The grid is lazy: only the first card is guaranteed to be built.
+        if (expected.isNotEmpty) {
+          expect(find.byKey(ValueKey('card_${playableFirst(expected).first.id}')), findsOneWidget,
+              reason: '${country.code}/${cat.id}');
         }
         if (expected.isEmpty) expect(find.text('Tiada saluran dalam kategori ini'), findsOneWidget);
       }
@@ -116,11 +119,14 @@ void main() {
   testWidgets('D-pad: first channel focused, arrows move focus, select opens player', (t) async {
     // Use a database where TV1 has no stream to exercise the official-platform path.
     final db = copyDb(realDatabase());
-    final tv1 = ((db['channels.json']!['countries'] as List).first as Map)['channels'][0] as Map;
-    tv1
-      ..['stream_type'] = 'platform'
-      ..['stream_url'] = ''
-      ..['availability'] = 'unknown';
+    // Remove all Malaysian streams so the grid keeps database order.
+    for (final c in ((db['channels.json']!['countries'] as List).first as Map)['channels'] as List) {
+      (c as Map)
+        ..['stream_type'] = 'platform'
+        ..['stream_url'] = ''
+        ..['availability'] = 'unknown'
+        ..['official_url'] = 'https://rtmklik.rtm.gov.my/';
+    }
     final s = await makeState(db);
     await pumpApp(t, s);
     expect(focusedCardId(), 'my_tv1');
