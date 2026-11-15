@@ -54,7 +54,7 @@ void main() {
         seen.add(r.url.path);
         if (r.url.path.endsWith('master.m3u8')) return http.Response(master, 200);
         if (r.url.path.endsWith('low/index.m3u8')) return http.Response(media, 200);
-        if (r.url.path.endsWith('seg001.ts')) {
+        if (r.url.path.endsWith('seg002.ts')) {
           expect(r.headers['Range'], 'bytes=0-2047');
           return http.Response('TSDATA', 206);
         }
@@ -62,7 +62,8 @@ void main() {
       });
       final res = await c.check('https://streams.example.com/tv/master.m3u8', StreamType.hls);
       expect(res.status, StreamStatus.online);
-      expect(seen, ['/tv/master.m3u8', '/tv/low/index.m3u8', '/tv/low/seg001.ts']);
+      // The newest segment is tested (old ones rotate out of live playlists).
+      expect(seen, ['/tv/master.m3u8', '/tv/low/index.m3u8', '/tv/low/seg002.ts']);
     });
 
     test('HTTP 200 with an HTML page is NOT online', () async {

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "updated_at": "2026-11-15",
   "schema": "https://github.com/cdsouthernjhr-gif/teleM/blob/main/documentation/DATABASE.md",
   "countries": [
@@ -14,13 +14,13 @@
           "type": "FTA",
           "category": "general",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://d25tgymtnqzu8s.cloudfront.net/smil:tv1/playlist.m3u8?id=1",
           "secondary_url": "",
           "official_url": "https://rtmklik.rtm.gov.my/",
           "official_platform": "RTMKlik",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [
             "MY"
@@ -30,7 +30,7 @@
             "my_berita_rtm"
           ],
           "epg_id": "my_tv1",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "CDN used by RTM's official RTMKlik player. Tested from a non-Malaysian network without any referer/token: playlist + first segment OK.",
           "notes": ""
         },
         {
@@ -40,13 +40,13 @@
           "type": "FTA",
           "category": "entertainment",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://d25tgymtnqzu8s.cloudfront.net/smil:tv2/playlist.m3u8?id=2",
           "secondary_url": "",
           "official_url": "https://rtmklik.rtm.gov.my/",
           "official_platform": "RTMKlik",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [
             "MY"
@@ -55,7 +55,7 @@
             "my_tv1"
           ],
           "epg_id": "my_tv2",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "CDN used by RTM's official RTMKlik player. Tested from a non-Malaysian network without any referer/token: playlist + first segment OK.",
           "notes": ""
         },
         {
@@ -65,13 +65,13 @@
           "type": "FTA",
           "category": "entertainment",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://d25tgymtnqzu8s.cloudfront.net/smil:okey/playlist.m3u8?id=3",
           "secondary_url": "",
           "official_url": "https://rtmklik.rtm.gov.my/",
           "official_platform": "RTMKlik",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [
             "MY"
@@ -80,7 +80,7 @@
             "my_tv1"
           ],
           "epg_id": "my_tv_okey",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "CDN used by RTM's official RTMKlik player. Tested from a non-Malaysian network without any referer/token: playlist + first segment OK.",
           "notes": ""
         },
         {
@@ -115,13 +115,13 @@
           "type": "FTA",
           "category": "news",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://d25tgymtnqzu8s.cloudfront.net/smil:berita/playlist.m3u8?id=5",
           "secondary_url": "",
           "official_url": "https://rtmklik.rtm.gov.my/",
           "official_platform": "RTMKlik",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [
             "MY"
@@ -130,7 +130,7 @@
             "my_tv1"
           ],
           "epg_id": "my_berita_rtm",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "CDN used by RTM's official RTMKlik player. Tested from a non-Malaysian network without any referer/token: playlist + first segment OK.",
           "notes": ""
         },
         {
@@ -294,18 +294,18 @@
           "type": "FTA",
           "category": "general",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
           "secondary_url": "",
           "official_url": "https://www.tvri.go.id/",
           "official_platform": "TVRI Klik",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [],
           "alternatives": [],
           "epg_id": "id_tvri_nasional",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "TVRI's own server (tvri.go.id). Playlist + first segment OK.",
           "notes": ""
         },
         {
@@ -315,20 +315,20 @@
           "type": "FTA",
           "category": "general",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://ott-balancer.tvri.go.id/live/eds/TVRIWorld/hls/TVRIWorld.m3u8",
           "secondary_url": "",
           "official_url": "https://www.tvri.go.id/",
           "official_platform": "TVRI Klik",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [],
           "alternatives": [
             "id_tvri_nasional"
           ],
           "epg_id": "id_tvri_world",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "TVRI's own server (tvri.go.id). Playlist + first segment OK.",
           "notes": ""
         },
         {
@@ -361,20 +361,20 @@
           "type": "FTA",
           "category": "general",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://ott-balancer.tvri.go.id/live/eds/DKI/hls/DKI.m3u8",
           "secondary_url": "",
           "official_url": "https://www.tvri.go.id/",
           "official_platform": "TVRI Klik",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [],
           "alternatives": [
             "id_tvri_nasional"
           ],
           "epg_id": "id_tvri_daerah",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "TVRI Jakarta (DKI) regional station on TVRI's own server. Not 24/7. Playlist + first segment OK.",
           "notes": "Regional stations; add one entry per station when verified."
         },
         {
@@ -552,18 +552,18 @@
           "type": "FTA",
           "category": "news",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://edge.medcom.id/live-edge/smil:metro.smil/playlist.m3u8",
           "secondary_url": "",
           "official_url": "https://www.metrotvnews.com/",
           "official_platform": "Metro TV News",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [],
           "alternatives": [],
           "epg_id": "id_metro_tv",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "Media Group's own server (medcom.id, Metro TV's digital arm). Playlist + first segment OK.",
           "notes": ""
         },
         {
@@ -726,18 +726,18 @@
           "type": "FTA",
           "category": "news",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index.m3u8",
           "secondary_url": "",
           "official_url": "https://www.channelnewsasia.com/",
           "official_platform": "CNA",
-          "availability": "unknown",
-          "last_checked": null,
+          "availability": "online",
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [],
           "alternatives": [],
           "epg_id": "sg_cna",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "CDN used by Mediacorp/CNA's official player. Playlist + first segment OK.",
           "notes": ""
         }
       ]
@@ -753,18 +753,18 @@
           "type": "FTA",
           "category": "general",
           "logo": "",
-          "stream_type": "platform",
-          "stream_url": "",
+          "stream_type": "hls",
+          "stream_url": "https://d1211whpimeups.cloudfront.net/smil:rtb1/playlist.m3u8",
           "secondary_url": "",
           "official_url": "https://www.rtbgo.bn/",
           "official_platform": "RTB Go",
           "availability": "unknown",
-          "last_checked": null,
+          "last_checked": "2026-11-15",
           "enabled": true,
           "geo_allowed": [],
           "alternatives": [],
           "epg_id": "bn_rtb_sukmaindera",
-          "verification": "Official platform URL from public sources; no direct stream verified yet.",
+          "verification": "CDN used by RTB Go. Returned HTTP 403 from a non-Bruneian test network; may be restricted to Brunei. Not confirmed playable.",
           "notes": ""
         },
         {

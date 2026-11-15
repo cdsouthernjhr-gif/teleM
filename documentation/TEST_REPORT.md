@@ -1,5 +1,7 @@
 # Laporan ujian — 15 Nov 2026
 
+**Kemas kini v2:** 9 stream terus diuji ONLINE dengan `tool/health_check.dart` (lihat SOURCES.md). Pemeriksa kini menguji segmen terbaharu dalam playlist live.
+
 Prinsip: hanya perkara yang **benar-benar diuji** ditanda ✅. Selebihnya ditanda ❌ BELUM DIUJI beserta sebabnya.
 
 ## Diuji secara automatik (51 ujian, `flutter test`, lulus lokal & di GitHub Actions)
@@ -24,7 +26,7 @@ Prinsip: hanya perkara yang **benar-benar diuji** ditanda ✅. Selebihnya ditand
 
 | Keperluan | Sebab |
 |---|---|
-| Setiap URL stream sebenar / main semula HLS sebenar | ❌ Tiada URL stream terus yang disahkan (lihat STREAM_VERIFICATION.md). Rangkaian persekitaran pembinaan menyekat semua hos penyiar dan berada di luar Malaysia. Butang **UJI PEMAIN HLS** (Tetapan) disediakan untuk menguji pemain dengan stream contoh rasmi Apple pada peranti. |
+| Main semula video sebenar pada telefon/TV | ❌ URL v2 lulus ujian HTTP (playlist dan segmen, lihat SOURCES.md), tetapi main semula dalam aplikasi pada peranti belum disahkan. Dari Malaysia, gunakan Tetapan → **UJI SEMUA STREAM** dan cuba setiap saluran. |
 | Android 6.0 emulator / peranti sebenar | ❌ Tiada KVM/peranti dalam persekitaran pembinaan. Hanya minSdk dan keserasian dependency (Media3 1.5.1 minSdk 21) disahkan secara statik. |
 | TV Box RAM 2 GB | ❌ Tiada peranti. Langkah penjimatan memori telah dilaksanakan (lihat ARCHITECTURE.md) tetapi belum diukur. |
 | Remote fizikal (DPAD_CENTER, butang CH, BACK) pada perkakasan | ❌ Hanya simulasi kekunci Flutter. |

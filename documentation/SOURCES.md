@@ -1,5 +1,23 @@
 # Sumber rasmi setiap saluran
 
+## Stream terus dalam pangkalan data v2
+
+Semua URL di bawah diuji pada 15 Nov 2026 dengan `tool/health_check.dart`, iaitu playlist, varian dan segmen terbaharu. Ujian dibuat dari rangkaian **di luar Malaysia**, tanpa referer, token atau kuki.
+
+Calon URL diambil daripada indeks awam iptv-org. Hanya hos milik penyiar atau CDN pemain rasmi mereka disimpan. URL IP `http://`, restream pihak ketiga, worker proksi dan URL yang memerlukan header palsu ditolak.
+
+| Saluran | Hos | Keputusan |
+|---|---|---|
+| TV1, TV2, TV Okey, Berita RTM | `d25tgymtnqzu8s.cloudfront.net` (CDN pemain RTMKlik) | ONLINE (TV2 sekali 404 sementara akibat segmen berputar; 3/3 ujian ulang ONLINE) |
+| TVRI Nasional, TVRI World, TVRI Jakarta (Daerah) | `ott-balancer.tvri.go.id` (pelayan TVRI) | ONLINE |
+| Metro TV | `edge.medcom.id` (Media Group) | ONLINE |
+| CNA | `d2e1asnsl7br7b.cloudfront.net` (CDN pemain CNA) | ONLINE |
+| RTB Sukmaindera | `d1211whpimeups.cloudfront.net` (CDN RTB Go) | HTTP 403 di luar Brunei; tidak disahkan |
+| Suria | `d11h6a6nhl9kj9.cloudfront.net` | Hos tiada lagi (DNS); tidak dimasukkan |
+
+Pemilikan hos CloudFront tidak dapat dibuktikan melalui nama domain. Ia dikenal pasti sebagai CDN pemain rasmi berdasarkan indeks awam. **Kebenaran penyiar untuk penggunaan dalam aplikasi pihak ketiga belum disahkan**, jadi semak terma penyiar sebelum edaran awam.
+
+
 Dikumpul pada 15 Nov 2026 daripada sumber awam. **Tiada URL di bawah dapat dibuka dari persekitaran pembinaan** kerana hos penyiar disekat oleh rangkaian, jadi semuanya perlu disemak semula dari Malaysia. Tiada URL stream terus disenaraikan; lihat [STREAM_VERIFICATION.md](STREAM_VERIFICATION.md).
 
 ## Malaysia

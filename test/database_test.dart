@@ -28,6 +28,9 @@ MockClient serve(Map<String, Map<String, dynamic>> remote, {Set<String> fail = c
       return doc == null ? http.Response('nf', 404) : http.Response(jsonEncode(doc), 200);
     });
 
+/// Version of the database shipped in the repo; update tests use v0 + n.
+final int v0 = realDatabase()['app_config.json']!['database_version'] as int;
+
 void main() {
   group('Shipped database', () {
     final db = realDatabase();
@@ -106,7 +109,9 @@ void main() {
     test('online without last_checked', () {
       final db = playableDb();
       final my = ((db['channels.json']!['countries'] as List).first as Map)['channels'] as List;
-      (my[0] as Map)['availability'] = 'online';
+      (my[0] as Map)
+        ..['availability'] = 'online'
+        ..['last_checked'] = null;
       expect(SchemaValidator.validate(db).errors.join(), contains('requires last_checked'));
     });
 
@@ -140,23 +145,23 @@ void main() {
       final repo = repoWith(realDatabase(), serve({}), MemoryCacheStore());
       final b = await repo.loadLocal();
       expect(repo.source, DatabaseSource.bundled);
-      expect(b.version, 1);
+      expect(b.version, v0);
     });
 
     test('downloads, validates and caches a newer version', () async {
       final cache = MemoryCacheStore();
-      final repo = repoWith(realDatabase(), serve(playableDb(version: 2)), cache);
+      final repo = repoWith(realDatabase(), serve(playableDb(version: v0 + 1)), cache);
       await repo.loadLocal();
       final r = await repo.checkForUpdate();
       expect(r.outcome, UpdateOutcome.updated);
-      expect(repo.current!.version, 2);
+      expect(repo.current!.version, v0 + 1);
       expect(cache.value, isNotNull);
 
       // A fresh start (offline) now loads the cache, not the bundle.
       final offline = repoWith(realDatabase(), MockClient((_) async => throw http.ClientException('offline')), cache);
       final b = await offline.loadLocal();
       expect(offline.source, DatabaseSource.cache);
-      expect(b.version, 2);
+      expect(b.version, v0 + 1);
       expect(b.byId('my_tv1')!.hasDirectStream, isTrue);
     });
 
@@ -178,28 +183,28 @@ void main() {
 
     test('invalid remote JSON keeps the old cache', () async {
       final cache = MemoryCacheStore();
-      final good = repoWith(realDatabase(), serve(playableDb(version: 2)), cache);
+      final good = repoWith(realDatabase(), serve(playableDb(version: v0 + 1)), cache);
       await good.checkForUpdate();
       final before = cache.value;
 
-      final bad = playableDb(version: 3);
+      final bad = playableDb(version: v0 + 2);
       ((bad['channels.json']!['countries'] as List).first as Map)['channels'] = 'not-a-list';
       final repo = repoWith(realDatabase(), serve(bad), cache);
       await repo.loadLocal();
       final r = await repo.checkForUpdate();
       expect(r.outcome, UpdateOutcome.failedInvalid);
       expect(cache.value, before);
-      expect(repo.current!.version, 2);
+      expect(repo.current!.version, v0 + 1);
     });
 
     test('network failure half-way keeps the old cache', () async {
       final cache = MemoryCacheStore();
-      final repo = repoWith(realDatabase(), serve(playableDb(version: 5), fail: {'epg.json'}), cache);
+      final repo = repoWith(realDatabase(), serve(playableDb(version: v0 + 4), fail: {'epg.json'}), cache);
       await repo.loadLocal();
       final r = await repo.checkForUpdate();
       expect(r.outcome, UpdateOutcome.failedNetwork);
       expect(cache.value, isNull);
-      expect(repo.current!.version, 1);
+      expect(repo.current!.version, v0);
     });
 
     test('corrupt cache falls back to bundled data', () async {
@@ -210,12 +215,12 @@ void main() {
     });
 
     test('database that needs a newer app build is not applied', () async {
-      final remote = playableDb(version: 4);
+      final remote = playableDb(version: v0 + 3);
       remote['app_config.json']!['min_app_build'] = 99;
       final repo = repoWith(realDatabase(), serve(remote), MemoryCacheStore());
       final r = await repo.checkForUpdate();
       expect(r.outcome, UpdateOutcome.appTooOld);
-      expect(repo.current!.version, 1);
+      expect(repo.current!.version, v0);
     });
 
     test('repoRootUrl is derived from the database URL', () {

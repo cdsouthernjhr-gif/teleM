@@ -1,9 +1,14 @@
 {
-  "database_version": 1,
+  "database_version": 2,
   "min_app_build": 1,
   "updated_at": "2026-11-15",
   "allowed_stream_domains": [
-    "devstreaming-cdn.apple.com"
+    "devstreaming-cdn.apple.com",
+    "d25tgymtnqzu8s.cloudfront.net",
+    "ott-balancer.tvri.go.id",
+    "edge.medcom.id",
+    "d2e1asnsl7br7b.cloudfront.net",
+    "d1211whpimeups.cloudfront.net"
   ],
   "allowed_official_domains": [
     "awesometv.my",

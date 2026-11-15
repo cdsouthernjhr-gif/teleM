@@ -114,7 +114,14 @@ void main() {
   });
 
   testWidgets('D-pad: first channel focused, arrows move focus, select opens player', (t) async {
-    final s = await makeState(realDatabase());
+    // Use a database where TV1 has no stream to exercise the official-platform path.
+    final db = copyDb(realDatabase());
+    final tv1 = ((db['channels.json']!['countries'] as List).first as Map)['channels'][0] as Map;
+    tv1
+      ..['stream_type'] = 'platform'
+      ..['stream_url'] = ''
+      ..['availability'] = 'unknown';
+    final s = await makeState(db);
     await pumpApp(t, s);
     expect(focusedCardId(), 'my_tv1');
     await press(t, LogicalKeyboardKey.arrowRight);

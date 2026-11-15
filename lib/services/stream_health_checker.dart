@@ -155,6 +155,22 @@ class StreamHealthChecker {
     return null;
   }
 
+  /// Newest segment of a media playlist. Live playlists drop their oldest
+  /// segments continuously, so testing the first one can give a false 404.
+  static String? lastSegment(String playlist) {
+    final lines = const LineSplitter().convert(playlist).map((l) => l.trim()).toList();
+    String? last;
+    for (var i = 0; i < lines.length; i++) {
+      if (!lines[i].startsWith('#EXTINF')) continue;
+      for (var j = i + 1; j < lines.length; j++) {
+        if (lines[j].isEmpty || lines[j].startsWith('#')) continue;
+        last = lines[j];
+        break;
+      }
+    }
+    return last;
+  }
+
   static bool isHlsPlaylist(String body) => body.replaceFirst('﻿', '').trimLeft().startsWith('#EXTM3U');
 
   /// Checks one URL. [geoAllowed]/[userCountry] help interpret HTTP 403.
@@ -223,7 +239,7 @@ class StreamHealthChecker {
         return HealthResult(StreamStatus.unknown, httpCode: playlist.code, detail: 'variant_not_hls');
       }
     }
-    final seg = firstMediaLine(playlist.body, master: false);
+    final seg = lastSegment(playlist.body);
     if (seg == null) {
       return HealthResult(StreamStatus.offline, httpCode: playlist.code, detail: 'playlist_has_no_segments');
     }
