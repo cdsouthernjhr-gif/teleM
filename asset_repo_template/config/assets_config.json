@@ -1,0 +1,47 @@
+{
+  "appId": "com.example.myapp",
+  "minimumManagerVersion": "1.0.0",
+  "defaults": {
+    "required": false,
+    "downloadOnStartup": false
+  },
+  "ignore": [],
+  "assets": {
+    "audio.zip": {
+      "id": "audio_pack_01",
+      "category": "audio",
+      "localPath": "audio/audio.zip",
+      "required": true,
+      "downloadOnStartup": true,
+      "extract": true,
+      "description": "Core sound effects"
+    },
+    "images.zip": {
+      "id": "images_pack_01",
+      "category": "image",
+      "localPath": "images/images.zip",
+      "required": true,
+      "extract": true
+    },
+    "database.zip": {
+      "id": "database_main",
+      "category": "database",
+      "localPath": "main.zip",
+      "required": true,
+      "extract": true
+    },
+    "app_config.json": {
+      "id": "app_config",
+      "category": "config",
+      "localPath": "config/app_config.json",
+      "downloadOnStartup": true
+    },
+    "videos.zip": {
+      "id": "videos_pack_01",
+      "category": "video",
+      "localPath": "videos/videos.zip",
+      "extract": true,
+      "description": "Optional intro videos"
+    }
+  }
+}

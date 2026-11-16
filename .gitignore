@@ -49,3 +49,4 @@ app.*.map.json
 *.apk
 health_report.json
 report.json
+android/build/

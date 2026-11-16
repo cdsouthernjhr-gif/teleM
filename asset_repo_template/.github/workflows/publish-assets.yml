@@ -1,0 +1,84 @@
+# Publishes a new asset release from a folder of the repository (use Git LFS
+# for large files, or publish from your computer instead - see README):
+#   1. generate + validate manifest.json (unchanged assets keep their old URL),
+#   2. create the GitHub Release and upload only the changed files,
+#   3. check every URL is downloadable,
+#   4. commit manifest.json LAST, so the app never sees a manifest that points
+#      to files that are not uploaded yet.
+
+name: Publish assets
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, e.g. v1.1.0"
+        required: true
+      source:
+        description: "Folder with the release files (relative to the repo)"
+        required: true
+        default: "release-assets"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-assets
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Tool tests
+        run: python -m unittest discover -s tools/tests
+
+      - name: Generate manifest
+        run: |
+          cp manifest/manifest.json /tmp/previous.json 2>/dev/null || echo '{}' > /tmp/previous.json
+          python tools/generate_manifest.py \
+            --owner "${{ github.repository_owner }}" \
+            --repo "${{ github.event.repository.name }}" \
+            --tag "${{ inputs.tag }}" \
+            --source "${{ inputs.source }}" \
+            --output manifest/manifest.json \
+            --config config/assets_config.json \
+            --previous /tmp/previous.json \
+            --upload-list /tmp/upload.txt
+
+      - name: Validate manifest against local files
+        run: |
+          python tools/validate_manifest.py manifest/manifest.json \
+            --owner "${{ github.repository_owner }}" \
+            --repo "${{ github.event.repository.name }}" \
+            --check-files "${{ inputs.source }}" --tag "${{ inputs.tag }}"
+
+      - name: Create release and upload changed files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ ! -s /tmp/upload.txt ]; then echo "Nothing changed"; exit 0; fi
+          gh release view "${{ inputs.tag }}" >/dev/null 2>&1 || \
+            gh release create "${{ inputs.tag }}" --title "Assets ${{ inputs.tag }}" --notes "FDAM asset release"
+          xargs -a /tmp/upload.txt gh release upload "${{ inputs.tag }}" --clobber
+
+      - name: Verify every asset URL is downloadable
+        run: python tools/validate_manifest.py manifest/manifest.json --check-urls
+
+      - name: Commit manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manifest/manifest.json manifest/manifest-version.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Manifest for ${{ inputs.tag }}"
+          git push

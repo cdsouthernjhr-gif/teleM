@@ -42,6 +42,19 @@ jobs:
       - name: Run unit tests
         run: flutter test
 
+      - name: FDAM package - analyze and test
+        working-directory: packages/fdam
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+
+      - name: FDAM asset tools (Python) - test and validate sample manifest
+        working-directory: asset_repo_template
+        run: |
+          python3 -m unittest discover -s tools/tests
+          python3 tools/validate_manifest.py manifest/manifest.json --app-id com.example.myapp --check-files examples/release-assets --tag v1.0.0
+
       # Optional: provide a real release key via repository secrets
       # ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD.
       # Without them the APK is signed with the debug key (fine for testing).

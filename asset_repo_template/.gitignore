@@ -1,0 +1,8 @@
+# Large files are published as GitHub Release assets, never committed.
+release-assets/*
+!release-assets/.gitkeep
+!release-assets/README.md
+upload.txt
+__pycache__/
+*.pyc
+.DS_Store

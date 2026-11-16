@@ -15,6 +15,10 @@ Aplikasi TV percuma Flutter untuk **Android TV Box, telefon dan tablet Android**
 > Saluran yang boleh dimainkan dipaparkan dahulu dalam grid. Saluran lain membuka **platform rasmi**.
 > Langkah menambah URL baharu ada dalam [documentation/STREAM_VERIFICATION.md](documentation/STREAM_VERIFICATION.md).
 
+## Aset tambahan (FDAM)
+
+Aplikasi kini mengandungi **Flutter Dynamic Asset Manager** (`packages/fdam/`): audio, gambar, video, pangkalan data dan ZIP boleh disimpan dalam GitHub Releases dan dimuat turun, disahkan (SHA-256), dibuka dengan selamat dan dikemas kini selepas pemasangan, tanpa membesarkan APK. Ia **dimatikan secara lalai**; aktifkan dengan `--dart-define=FDAM_MANIFEST_URL=...`. Panduan penuh: [documentation/FDAM.md](documentation/FDAM.md). Templat repositori aset + alat Python: [`asset_repo_template/`](asset_repo_template).
+
 ## Struktur repository
 
 ```
@@ -29,6 +33,9 @@ Aplikasi TV percuma Flutter untuk **Android TV Box, telefon dan tablet Android**
 ├── logos/                   malaysia/ indonesia/ singapore/ brunei/
 ├── assets/certs/            Root CA ISRG (Let's Encrypt) untuk Android 6.0
 ├── tool/                    validate_db.dart, health_check.dart
+├── packages/fdam/           Flutter Dynamic Asset Manager (pakej boleh guna semula)
+├── asset_repo_template/     templat repositori aset GitHub + alat Python manifest
+├── integration_test/        ujian peranti Android untuk FDAM
 ├── test/                    ujian unit + widget
 ├── documentation/           panduan
 ├── build.ps1                skrip binaan PowerShell (Windows)
@@ -63,3 +70,4 @@ GitHub Actions membina `MY_ASEAN_TV.apk` pada setiap push dan memuat naiknya seb
 | [documentation/ARCHITECTURE.md](documentation/ARCHITECTURE.md) | Seni bina, aliran main semula, geo, VPN, keselamatan |
 | [documentation/SOURCES.md](documentation/SOURCES.md) | Senarai sumber/platform rasmi bagi setiap saluran |
 | [documentation/TEST_REPORT.md](documentation/TEST_REPORT.md) | Apa yang telah diuji dan apa yang BELUM |
+| [documentation/FDAM.md](documentation/FDAM.md) | Pengurus aset dinamik: seni bina, pemasangan, penerbitan release, binaan APK, ujian |

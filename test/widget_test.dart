@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fdam/fdam.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,11 +9,13 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:my_asean_tv/data/database_repository.dart';
 import 'package:my_asean_tv/data/local_store.dart';
+import 'package:my_asean_tv/fdam_setup.dart';
 import 'package:my_asean_tv/main.dart';
 import 'package:my_asean_tv/services/logo_cache.dart';
 import 'package:my_asean_tv/state/app_state.dart';
 import 'package:my_asean_tv/ui/player/player_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'helpers.dart';
 import 'services_test.dart' show FakeBackend;
@@ -43,11 +46,11 @@ Future<AppState> makeState(Map<String, Map<String, dynamic>> db, {bool online = 
   return state;
 }
 
-Future<void> pumpApp(WidgetTester t, AppState s) async {
+Future<void> pumpApp(WidgetTester t, AppState s, {FdamBinding? fdam}) async {
   t.view.physicalSize = const Size(1920, 1080);
   t.view.devicePixelRatio = 1.5;
   addTearDown(t.view.reset);
-  await t.pumpWidget(MyAseanTvApp(state: s));
+  await t.pumpWidget(MyAseanTvApp(state: s, fdam: fdam));
   await t.pumpAndSettle();
 }
 
@@ -221,5 +224,49 @@ void main() {
     await t.pumpAndSettle();
     expect(s.lang, 'en');
     expect(find.text('MANUAL UPDATE'), findsOneWidget);
+  });
+
+  testWidgets('FDAM: app opens through the asset gate and Settings links to the asset dashboard', (t) async {
+    final s = await makeState(realDatabase());
+    late AssetManager manager;
+    late Directory dir;
+    await t.runAsync(() async {
+      sqfliteFfiInit();
+      dir = await Directory.systemTemp.createTemp('fdam_app_');
+      manager = await AssetManager.create(
+        // No manifest URL: FDAM is disabled, exactly like a default build.
+        config: const FdamConfig(manifestUrl: '', appId: 'com.myaseantv.tv'),
+        rootDirectory: dir,
+        database: await FdamDatabase.open('${dir.path}/fdam.db', factory: databaseFactoryFfi),
+        network: ManualNetworkMonitor(),
+        preferences: MemoryFdamPreferences(),
+        storage: FixedStorageInfo(1 << 30),
+      );
+    });
+    await pumpApp(t, s, fdam: FdamBinding.withManager(manager));
+    // The gate lets the app through: the home screen is shown.
+    expect(find.text('Tetapan'), findsOneWidget);
+    await t.tap(find.text('Tetapan'));
+    await t.pumpAndSettle();
+    await t.scrollUntilVisible(find.byKey(const ValueKey('btn_extra_assets')), 200,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.text('Aset tambahan'), findsOneWidget);
+    await t.tap(find.byKey(const ValueKey('btn_extra_assets')));
+    await t.pumpAndSettle();
+    expect(find.text('Papan Pemuka Aset'), findsOneWidget);
+    expect(find.textContaining('belum dikonfigurasi'), findsOneWidget);
+    await t.runAsync(() async {
+      await manager.dispose();
+      await manager.db.close();
+      await dir.delete(recursive: true);
+    });
+  });
+
+  testWidgets('FDAM: Settings has no asset section when FDAM is not configured', (t) async {
+    final s = await makeState(realDatabase());
+    await pumpApp(t, s);
+    await t.tap(find.text('Tetapan'));
+    await t.pumpAndSettle();
+    expect(find.byKey(const ValueKey('btn_extra_assets')), findsNothing);
   });
 }
