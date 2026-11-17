@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:fdam/fdam.dart' show FdamGate;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +10,6 @@ import 'core/diagnostics.dart';
 import 'core/http_client_factory.dart';
 import 'data/database_repository.dart';
 import 'data/local_store.dart';
-import 'fdam_setup.dart';
 import 'services/logo_cache.dart';
 import 'state/app_state.dart';
 import 'ui/home/home_screen.dart';
@@ -50,24 +48,16 @@ Future<void> main() async {
     logos: LogoCache(client: client, dir: Directory('${support.path}/logos'), repoRootUrl: repo.repoRootUrl),
   );
   await state.init();
-  // Extra assets (audio, images, video, databases) from GitHub Releases.
-  // Disabled unless the build sets FDAM_MANIFEST_URL.
-  final fdam = await FdamBinding.init(support, language: state.lang);
-  if (fdam != null) state.addListener(() => fdam.setLanguage(state.lang));
-  runApp(MyAseanTvApp(state: state, fdam: fdam));
+  runApp(MyAseanTvApp(state: state));
 }
 
 class MyAseanTvApp extends StatelessWidget {
-  const MyAseanTvApp({super.key, required this.state, this.fdam});
+  const MyAseanTvApp({super.key, required this.state});
   final AppState state;
-
-  /// Null when the dynamic asset manager is not configured.
-  final FdamBinding? fdam;
 
   @override
   Widget build(BuildContext context) {
-    final binding = fdam;
-    final app = AppScope(
+    return AppScope(
       state: state,
       child: MaterialApp(
         title: 'MY ASEAN TV',
@@ -85,13 +75,8 @@ class MyAseanTvApp extends StatelessWidget {
           ...WidgetsApp.defaultShortcuts,
           const SingleActivator(LogicalKeyboardKey.select): const ActivateIntent(),
         },
-        // Required extra assets (if any) are downloaded before the home
-        // screen; without a manifest the app still opens.
-        home: binding == null
-            ? const HomeScreen()
-            : const FdamGate(appName: 'MY ASEAN TV', allowContinueWithoutManifest: true, child: HomeScreen()),
+        home: const HomeScreen(),
       ),
     );
-    return binding == null ? app : binding.wrap(app);
   }
 }

@@ -1,17 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- FDAM background maintenance uses WorkManager without notifications or a
-         foreground service. Drop the permissions the workmanager plugin
-         (debug notifications) and androidx.work (SystemForegroundService) add,
-         so the app only requests what it really uses. WAKE_LOCK and
-         RECEIVE_BOOT_COMPLETED stay: WorkManager needs them to run and to
-         reschedule work after a reboot. -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
 
     <!-- Runs on both Android TV (leanback) and phones/tablets. -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
@@ -52,10 +42,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <!-- Not used by FDAM (no setForeground); removed with its permission. -->
-        <service
-            android:name="androidx.work.impl.foreground.SystemForegroundService"
-            tools:node="remove" />
     </application>
 
     <!-- Needed on Android 11+ to find a browser for "OPEN OFFICIAL PLATFORM". -->

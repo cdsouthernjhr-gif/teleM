@@ -35,9 +35,6 @@ dependencies:
   shared_preferences: ^2.5.3
   path_provider: ^2.1.5
   http: ^1.6.0
-  flutter_riverpod: ^3.3.2
-  fdam:
-    path: packages/fdam
 
 dev_dependencies:
   flutter_test:
@@ -50,12 +47,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-  sqflite_common_ffi: ^2.3.6
-  # FDAM device test (integration_test/fdam_device_test.dart)
-  integration_test:
-    sdk: flutter
-  archive: ^4.7.1
-  crypto: ^3.0.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

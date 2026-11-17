@@ -22,27 +22,6 @@ Prinsip: hanya perkara yang **benar-benar diuji** ditanda ✅. Selebihnya ditand
 | `flutter analyze` | ✅ | tiada isu |
 | APK release terbina, `minSdk 23`, `targetSdk 35`, Leanback launcher | ✅ | GitHub Actions run 43699939597 (`aapt dump badging`: `sdkVersion:'23'`) |
 
-## FDAM — Flutter Dynamic Asset Manager (16 Nov 2026)
-
-Dijalankan dalam persekitaran pembinaan (Linux, Flutter 3.32.8). Ujian muat turun menggunakan **pelayan HTTP tempatan sebenar** (ETag, Range/If-Range, redirect, sambungan diputuskan, pelayan tergantung), SQLite sebenar (sqflite FFI) dan sistem fail sebenar — bukan olok-olok.
-
-| Keperluan | Status | Bukti |
-|---|---|---|
-| `packages/fdam`: `flutter analyze` | ✅ | tiada isu |
-| `packages/fdam`: 71 ujian | ✅ | `cd packages/fdam && flutter test` |
-| Senario §19 no. 1–20 (pemasangan pertama, luar talian, terganggu, resume, manifest tidak sah, SHA-256 salah, storan tidak cukup, berganda, gambar/DB dikemas kini, pilihan, ZIP, ZIP Slip, ditutup semasa muat turun, restart, release tiada, manifest tiada, rollback, permulaan luar talian) | ✅ (pada hos) | `asset_manager_test.dart` |
-| Keselamatan ZIP (traversal, mutlak, symlink, bom, had fail/saiz, rosak) | ✅ | `zip_extractor_test.dart` |
-| Migrasi SQLite v1→v2, kegigihan selepas dibuka semula | ✅ | `database_test.dart` |
-| UI Riverpod (gate → muat turun sebenar → aplikasi, papan pemuka, pengurus muat turun, tetapan) | ✅ | `ui_test.dart` |
-| Output penjana Python diterima pengesah Dart dan dipasang hujung-ke-hujung | ✅ | `template_compat_test.dart` |
-| Alat Python (penjana, pengesah, hash): 10 ujian | ✅ | `python -m unittest discover -s tools/tests` |
-| Aplikasi: ujian sedia ada + 2 ujian FDAM (gerbang, pautan Tetapan) | ✅ | `flutter test` (53 ujian) |
-| APK debug + release dengan FDAM dibina dalam persekitaran ini | ✅ | `flutter build apk --debug` dan `--release` (R8 aktif) berjaya; `aapt`: `sdkVersion:'23'`, `targetSdkVersion:'35'`. Kebenaran: INTERNET, ACCESS_NETWORK_STATE, WAKE_LOCK, RECEIVE_BOOT_COMPLETED sahaja (POST_NOTIFICATIONS dan FOREGROUND_SERVICE daripada WorkManager dibuang kerana tidak digunakan). |
-| APK tidak mengandungi fail media | ✅ | Tiada `.mp3/.wav/.mp4/.zip` dalam APK. Saiz release (3 ABI): 47.4 MB sebelum FDAM → 52.4 MB selepas (+1.5 MB kod Dart dan +0.37 MB dex bagi setiap ABI). |
-| Ujian peranti Android (`integration_test/fdam_device_test.dart`) | ❌ BELUM DIJALANKAN | Tiada KVM/peranti. Ia menguji sqflite asli, StatFs (plugin FDAM), connectivity_plus pada peranti. |
-| WorkManager benar-benar dijalankan oleh Android | ❌ BELUM DIUJI | Pendaftaran dikompil; pelaksanaan latar belakang memerlukan peranti. `FdamBackground.runMaintenance` diuji secara tidak langsung melalui laluan yang sama (`checkForUpdates` + `downloadItems`). |
-| Muat turun sebenar dari github.com / objects.githubusercontent.com | ❌ BELUM DIUJI | Belum ada repositori aset yang diterbitkan; redirect GitHub disimulasikan oleh pelayan tempatan. |
-
 ## BELUM DIUJI
 
 | Keperluan | Sebab |
@@ -54,7 +33,7 @@ Dijalankan dalam persekitaran pembinaan (Linux, Flutter 3.32.8). Ujian muat turu
 | Pengesanan geo sebenar (Cloudflare/ipapi) | ❌ Hos disekat dalam persekitaran pembinaan; logik penghuraian diuji dengan data olok-olok. |
 | Pengesanan VPN & membuka tetapan VPN | ❌ Kod Kotlin dikompil dalam APK tetapi belum dijalankan pada peranti. |
 | TLS Let's Encrypt pada Android 6.0 | ❌ Root ISRG ditambah; perlu disahkan pada peranti Android 6.0. |
-| Binaan lokal dalam persekitaran Claude | ✅ (16 Nov 2026) Maven Central masih memulangkan HTTP 429 melalui proksi; binaan berjaya dengan skrip init Gradle tempatan yang menghala ke cermin Maven Central Google (tidak di-commit). |
+| Binaan lokal dalam persekitaran Claude | ❌ Maven Central memulangkan HTTP 429 melalui proksi; APK dibina di GitHub Actions. |
 
 ## Senarai semak ujian manual pada peranti
 

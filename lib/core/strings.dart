@@ -32,12 +32,6 @@ class S {
       'ms': 'Pangkalan data baharu memerlukan versi aplikasi yang lebih baharu',
       'en': 'The new database needs a newer app version'
     },
-    'extra_assets': {'ms': 'Aset tambahan', 'en': 'Extra assets'},
-    'extra_assets_desc': {
-      'ms': 'Fail tambahan (audio, gambar, video, pangkalan data) dimuat turun dari GitHub Releases dan disahkan dengan SHA-256.',
-      'en': 'Extra files (audio, images, video, databases) downloaded from GitHub Releases and verified with SHA-256.'
-    },
-    'extra_assets_open': {'ms': 'URUS ASET', 'en': 'MANAGE ASSETS'},
     'source_remote': {'ms': 'GitHub (terkini)', 'en': 'GitHub (latest)'},
     'source_cache': {'ms': 'Cache luar talian', 'en': 'Offline cache'},
     'source_bundled': {'ms': 'Data terbina dalam APK', 'en': 'Built-in data'},

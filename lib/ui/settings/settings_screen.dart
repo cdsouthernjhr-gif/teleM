@@ -1,10 +1,8 @@
-import 'package:fdam/fdam.dart' show AssetDashboardScreen;
 import 'package:flutter/material.dart';
 
 import '../../core/diagnostics.dart';
 import '../../core/strings.dart';
 import '../../data/models.dart';
-import '../../fdam_setup.dart';
 import '../home/home_screen.dart';
 import '../widgets/common.dart';
 
@@ -21,7 +19,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final s = app.s;
     final b = app.bundle;
     final lastCheck = app.store.lastUpdateCheck;
-    final fdam = FdamBinding.of(context);
 
     Widget section(String title, List<Widget> children, {String? desc}) => Container(
           margin: const EdgeInsets.only(bottom: 14),
@@ -90,15 +87,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   key: const ValueKey('btn_manual_update'), busy: app.updating),
             ]),
           ]),
-          if (fdam != null)
-            section(s.t('extra_assets'), desc: s.t('extra_assets_desc'), [
-              Wrap(children: [
-                button(s.t('extra_assets_open'), () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute<void>(builder: (_) => const AssetDashboardScreen()));
-                }, key: const ValueKey('btn_extra_assets')),
-              ]),
-            ]),
           section(s.t('geo'), desc: s.t('geo_desc'), [
             kv(s.t('country_now'),
                 app.geoInfo == null ? s.t('unknown') : '${app.geoInfo!.countryCode} (${app.geoInfo!.source})'),
