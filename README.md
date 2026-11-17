@@ -18,7 +18,7 @@ Aplikasi TV percuma Flutter untuk **Android TV Box, telefon dan tablet Android**
 ## Aset tambahan (FDAM)
 
 Flutter Dynamic Asset Manager telah dipindahkan ke repositori sendiri:
-[cdsouthernjhr-gif/flutter-dynamic-asset-manager](https://github.com/cdsouthernjhr-gif/flutter-dynamic-asset-manager).
+[cdsouthernjhr-gif/fdam](https://github.com/cdsouthernjhr-gif/fdam).
 Aplikasi ini tidak lagi mengandunginya.
 
 ## Struktur repository
